@@ -37,13 +37,15 @@ void* th_fun(void* arg){
         char* uuid_cstr = (*env)->GetStringUTFChars(env,uuid_str,NULL);
         LOG_I("%s",uuid_cstr);
         if (i == 4){
-            pthread_exit((void*)0);
+            goto end;
         }
         (*env)->ReleaseStringUTFChars(env,uuid_str,uuid_cstr);
         sleep(1);
     }
+    end:
     //解除关联
     (*javaVM)->DetachCurrentThread(javaVM);
+    pthread_exit((void*)0);
 }
 //JavaVM代表是的java虚拟机,所有的工作都是从javaVm开始
 //可以通过javaVm获取到每个线程关联的jniEnv
