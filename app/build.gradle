@@ -15,11 +15,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
+                abiFilters "armeabi-v7a"
                 cppFlags ""
             }
         }
         ndk{
             ldLibs "log"//在NDK中打印日志出来
+        }
+
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
     buildTypes {
