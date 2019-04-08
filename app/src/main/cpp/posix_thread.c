@@ -34,7 +34,7 @@ void* th_fun(void* arg){
     for (i = 0;i<5;i++){
         LOG_I("thread %s, i : %d",no,i);
         jstring uuid_str = (*env)->CallStaticObjectMethod(env,uuid_class_global,get_mid);
-        char* uuid_cstr = (*env)->GetStringUTFChars(env,uuid_str,NULL);
+        const char* uuid_cstr = (*env)->GetStringUTFChars(env,uuid_str,NULL);
         LOG_I("%s",uuid_cstr);
         if (i == 4){
             goto end;

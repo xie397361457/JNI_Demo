@@ -2,7 +2,7 @@
 #include "com_jni_ndk_FileNative.h"
 
 //获取文件大小
-long get_file_size(char *path) {
+long get_file_size(const char *path) {
     FILE *fp = fopen(path, "rb");
     //定位到文件末尾
     fseek(fp, 0, SEEK_END);
@@ -37,7 +37,7 @@ Java_com_jni_ndk_FileNative_diff(JNIEnv *env, jclass type, jstring diff_path_, j
         LOG_I("patch path:%s", patches[i]);
     }
 
-    long file_size = get_file_size(diff_path);
+    const long file_size = get_file_size(diff_path);
     if(file_size < count){
         LOG_E("警告:文件大小 小于%d",count);
         return;

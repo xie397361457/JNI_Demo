@@ -54,6 +54,13 @@ class MainActivity : AppCompatActivity() {
             PosixThread.posixThread()
 
         }
+
+        button6.setOnClickListener {
+            val input =  File(Environment.getExternalStorageDirectory(),"input.mp4").absolutePath
+            val output =  File(Environment.getExternalStorageDirectory(),"output_1280x720_yuv420p.yuv").absolutePath
+            DecodeYUV.decode(input,output)
+        }
+
         PosixThread.init()
     }
 
