@@ -4,14 +4,14 @@
 #include <pthread.h>
 #include "com_jni_ndk_DecodeYUV.h"
 //编码
-#include "include/libavcodec/avcodec.h"
+#include "ffmpeg/include/libavcodec/avcodec.h"
 //封装格式处理
-#include "include/libavformat/avformat.h"
+#include "ffmpeg/include/libavformat/avformat.h"
 //像素处理
-#include "include/libswscale/swscale.h"
-#include "include/libavutil/avutil.h"
-#include "include/libavutil/frame.h"
-#include "include/libavutil/imgutils.h"
+#include "ffmpeg/include/libswscale/swscale.h"
+#include "ffmpeg/include/libavutil/avutil.h"
+#include "ffmpeg/include/libavutil/frame.h"
+#include "ffmpeg/include/libavutil/imgutils.h"
 
 //PS 使用 YUV 播放器 播放时要根据视频实际宽高设置 播放器宽高
 

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.io.File
 import java.util.jar.JarFile
 
@@ -59,6 +60,10 @@ class MainActivity : AppCompatActivity() {
             val input =  File(Environment.getExternalStorageDirectory(),"input.mp4").absolutePath
             val output =  File(Environment.getExternalStorageDirectory(),"output_1280x720_yuv420p.yuv").absolutePath
             DecodeYUV.decode(input,output)
+        }
+        button7.setOnClickListener {
+            val input =  File(Environment.getExternalStorageDirectory(),"input.mp4").absolutePath
+            FFmpegPlayer.nicePlay(input,videoView.holder.surface)
         }
 
         PosixThread.init()

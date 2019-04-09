@@ -45,6 +45,11 @@ set_target_properties(avfilter
   set_target_properties(swscale
                          PROPERTIES IMPORTED_LOCATION
                          ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libswscale.so)
+  add_library(yuv SHARED IMPORTED)
+
+  set_target_properties(yuv
+                            PROPERTIES IMPORTED_LOCATION
+                            ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libyuv.so)
 
 add_library( # Sets the name of the library.
              jni_demo
@@ -57,6 +62,7 @@ add_library( # Sets the name of the library.
               src/main/cpp/decode_yuv.c
               src/main/cpp/file.c
               src/main/cpp/posix_thread.c
+              src/main/cpp/nice_ffmpeg_play.c
               )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -75,7 +81,9 @@ find_library( # Sets the name of the path variable.
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
-include_directories(src/main/cpp/include)
+include_directories(src/main/cpp/ffmpeg/include)
+include_directories(src/main/cpp/libyuv/libyuv)
+include_directories(src/main/cpp/libyuv/libyuv.h)
 target_link_libraries( # Specifies the target library.
                        jni_demo
                        avcodec
@@ -85,6 +93,9 @@ target_link_libraries( # Specifies the target library.
                        avutil
                        swresample
                        swscale
+                       yuv
+                       android
                        # Links the target library to the log library
                        # included in the NDK.
-                       ${log-lib} )
+                       ${log-lib}
+                       )
