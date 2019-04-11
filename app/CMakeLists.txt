@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
-
+#--------------------------- ffmpeg ----------------------------- #
 add_library(avcodec SHARED IMPORTED)
 
 set_target_properties(avcodec
@@ -45,11 +45,23 @@ set_target_properties(avfilter
   set_target_properties(swscale
                          PROPERTIES IMPORTED_LOCATION
                          ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libswscale.so)
+  #-----------------------------------    yuv     ------------------------------------- #
   add_library(yuv SHARED IMPORTED)
 
   set_target_properties(yuv
                             PROPERTIES IMPORTED_LOCATION
                             ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libyuv.so)
+  #-----------------------------------    fmod   ------------------------------------- #
+  add_library(fmod SHARED IMPORTED)
+
+  set_target_properties(fmod
+                              PROPERTIES IMPORTED_LOCATION
+                              ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libfmod.so)
+  add_library(fmodL SHARED IMPORTED)
+
+  set_target_properties(fmodL
+                                PROPERTIES IMPORTED_LOCATION
+                                ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libfmodL.so)
 
 add_library( # Sets the name of the library.
              jni_demo
@@ -63,8 +75,21 @@ add_library( # Sets the name of the library.
               src/main/cpp/file.c
               src/main/cpp/posix_thread.c
               src/main/cpp/nice_ffmpeg_play.c
+              src/main/cpp/fmod_local.cpp
+              src/main/cpp/fmod/common.cpp
+              src/main/cpp/fmod/common_platform.cpp
+              src/main/cpp/fmod/play_sound.cpp
               )
+#-----------------------------------    fmod_local   ------------------------------------- #
+#add_library( # Sets the name of the library.
+             #fmod_local
 
+             # Sets the library as a shared library.
+             #SHARED
+
+             # Provides a relative path to your source file(s).
+
+             # )
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
 # default, you only need to specify the name of the public NDK library
@@ -84,8 +109,10 @@ find_library( # Sets the name of the path variable.
 include_directories(src/main/cpp/ffmpeg/include)
 include_directories(src/main/cpp/libyuv/libyuv)
 include_directories(src/main/cpp/libyuv/libyuv.h)
+include_directories(src/main/cpp/fmod/inc)
 target_link_libraries( # Specifies the target library.
                        jni_demo
+                       #fmod_local
                        avcodec
                        avdevice
                        avfilter
@@ -94,6 +121,8 @@ target_link_libraries( # Specifies the target library.
                        swresample
                        swscale
                        yuv
+                       fmod
+                       fmodL
                        android
                        # Links the target library to the log library
                        # included in the NDK.

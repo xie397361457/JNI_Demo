@@ -62,3 +62,4 @@ JNIEXPORT void JNICALL Java_com_jni_ndk_PosixThread_posixThread
     pthread_t tid;
     pthread_create(&tid,NULL,th_fun,(void*)"NO1");
 }
+
